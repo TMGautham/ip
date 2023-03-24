@@ -1,0 +1,4 @@
+JS
+
+1. Function statement:
+	
