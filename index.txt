@@ -1,9 +1,0 @@
-css
-definitions
-git
-html
-js
-js_trick
-react_bits
-react_codes
-react
