@@ -1,0 +1,146 @@
+What's the output:
+1. scope:
+
+(function(){
+  var a = b = 3;
+})();
+
+console.log("a defined? " + (typeof a !== 'undefined'));
+console.log("b defined? " + (typeof b !== 'undefined'));
+
+Output:
+
+a defined? false
+b defined? true
+
+this is becuase L var = a =b =3 is shorthand for
+
+b = 3;
+var a = b;
+b is a global variable since it has no 'var'. Hence it is accessible outside while a is not.
+
+
+2. checking if it's an object
+
+var bar = null;
+console.log(typeof bar === "object");
+
+null is also an object. Hence the output is true.
+So, best way to do this check is: 
+console.log((bar !== null) && (typeof bar === "object"));
+
+3. this binding
+
+var myObject = {
+    foo: "bar",
+    func: function() {
+        var self = this;
+        console.log("outer func:  this.foo = " + this.foo);
+        console.log("outer func:  self.foo = " + self.foo);
+        (function() {
+            console.log("inner func:  this.foo = " + this.foo);
+            console.log("inner func:  self.foo = " + self.foo);
+        }());
+    }
+};
+myObject.func(); 
+
+Output: 
+
+outer func:  this.foo = bar   
+outer func:  self.foo = bar
+inner func:  this.foo = undefined  //this is because inner this does not have access to the outer myObject object. Hence it returns windows object and tries to search foo property of window object.
+inner func:  self.foo = bar
+
+4. return statement
+
+function foo2()
+{
+  return
+  {
+      bar: "hello"
+  };
+}
+
+output is undefined. This because the line 3 has 'return' alone and nothing else. Hence javascript automatically puts a semicolon and the line 3 is read as 'return;'.
+Hence the next line 
+  {
+      bar: "hello"
+  };
+ is not executed.
+
+5. settimeout:
+
+(function() {
+    console.log(1); 
+    setTimeout(function(){console.log(2)}, 1000); 
+    setTimeout(function(){console.log(3)}, 0); 
+    console.log(4);
+})();
+
+Output:
+1
+4
+3
+2
+
+6. String & mutability:
+
+var arr1 = "john".split('');
+var arr2 = arr1.reverse();
+var arr3 = "jones".split('');
+arr2.push(arr3);
+console.log("array 1: length=" + arr1.length + " last=" + arr1.slice(-1));
+console.log("array 2: length=" + arr2.length + " last=" + arr2.slice(-1));
+
+The logged output will be:
+
+"array 1: length=5 last=j,o,n,e,s"
+"array 2: length=5 last=j,o,n,e,s"
+
+7. String and Numbers:
+
+console.log(1 +  "2" + "2");
+console.log(1 +  +"2" + "2");
+console.log(1 +  -"1" + "2");
+console.log(+"1" +  "1" + "2");
+console.log( "A" - "B" + "2");
+console.log( "A" - "B" + 2);
+
+Output:
+"122"
+"32" // 1 + + "2" => +"2", here + is unary operator hence converts 2 to number, hence it's 1+2+"2" => 32
+"02"
+"112"
+"NaN2"	//same as previous comment. - is unary. Hence it tries to convert B to number which is not a number. Hence A-B is NaN
+NaN
+
+8. AN and OR operator:
+
+console.log("0 || 1 = "+(0 || 1));
+console.log("1 || 2 = "+(1 || 2));
+console.log("0 && 1 = "+(0 && 1));
+console.log("1 && 2 = "+(1 && 2));
+
+output:
+0 || 1 = 1
+1 || 2 = 1
+0 && 1 = 0
+1 && 2 = 2
+
+9. Object strigification
+
+var a={},
+    b={key:'b'},
+    c={key:'c'};
+
+a[b]=123;
+a[c]=456;
+
+console.log(a[b]);
+
+The output of this code will be 456 (not 123).
+
+The reason for this is as follows: When setting an object property, JavaScript will implicitly stringify the parameter value. In this case, since b and c are both objects, they will both be converted to "[object Object]". As a result, a[b] anda[c] are both equivalent to a["[object Object]"]
+
+

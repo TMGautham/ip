@@ -1,0 +1,298 @@
+1. string :
+
+const foo = new String('foo'); // Creates a String object
+console.log(foo); // [String: 'foo']
+
+How both are different from each other?
+const firstString = '2 + 2'; // Creates a string literal value
+const secondString = new String('2 + 2'); // Creates a String object
+eval(firstString); // Returns the number 4
+eval(secondString); // Returns a String object containing "2 + 2"
+
+2. how strings are immutable?
+
+const hello = 'Hello, World!';
+const helloLength = hello.length;
+hello[0] = 'L'; // This has no effect, because strings are immutable
+hello[0]; // This returns "H"
+
+
+3. what does split() and slice()
+
+ split():
+const str = 'The quick brown fox jumps over the lazy dog.';
+const words = str.split(' ');
+console.log(words)
+['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog.']
+
+ slice():
+const str = 'The quick brown fox jumps over the lazy dog.';
+console.log(str.slice(4,31));
+quick brown fox jumps over 
+
+4. Closures
+
+A closure is the combination of a function bundled one inside another. 
+Closure gives you access to an outer function's scope from an inner function.
+
+function add(x){
+    return function(y){
+        return x+y;
+    }
+}
+
+add(5)(4)
+9
+
+const add5 = add(5)
+undefined
+
+add5(2)
+7
+
+5. Practical example for a closure.
+
+Let's say a bank gives different loans at different rate of interest.
+We can write a function which gets the principal and number of years and returns functions which calculate interest for each type of interest, say homeLoan, carLoan etc.
+
+var interest = function(principal,year){
+    return{
+        homeLoan : function(){
+            return principal*year*7/1000;
+        },
+
+        personalLoan : function(){
+            return principal*year*10/1000;
+        },
+
+        carLoan : function(){
+            return principal*year*6/1000;
+        }
+    }
+}
+
+const yourLoan = interest(20000,5)
+yourLoan.homeLoan();
+700
+
+Indexed collections:
+
+6. How to iterate over arrays?
+	for loop and foreach
+	examples:
+		const x = ['a','b','c','d']
+
+		for(let i = 0; i<x.length; i++){
+    			console.log(x[i])
+		}
+			
+		x.forEach(i=>console.log(i))
+7. concat vs join?
+	The concat() method joins two or more arrays and returns a new array.
+
+	The join() method joins all elements of an array into a string.
+
+8. push vs pop vs shift vs unshift
+	push - adds a new element at the end of an array.
+	pop - removed the last element of the array. 
+	shift - removes the first element of the array.
+	unshift - adds elements at the start of the array.
+
+9. slice vs splice
+	slice - extracts a section of the array and returns the subarray as a separate array.
+		let q = ['a', 'b', 'c', 'd', 'e'];
+		q.slice(1,3)
+		(2) ['b', 'c']
+	
+	splice - removes one or more consecutive elements in an array and opionally replace with elements.
+		let q = ['a', 'b', 'c', 'd', 'e'];
+		q.splice(1,3,1,2,3)	
+		q
+		(5) ['a', 1, 2, 3, 'e']
+
+10. flat?
+	If an array has an array as one of it's elements, then flat would extract the elements in the inner array and add it as separate elements in the parent array.
+	It also takes parameters to recursively extract array of arrays or array of array of arrays.
+
+11. how to sort in descending order?
+	arr = [2,3,1,4]
+	sortedarr = arr.sort().reverse();
+
+12. sparse array?
+	Arrays with empty elements are called sparse arrays.
+
+13. forEach:
+	Foreach takes a callback function and run that callback function on each element of array one by one and returns nothing, i.e., undefined.
+
+14. filter:
+	Filter takes a callback function and runs that function on each element of the array and returns the filtered array based on the condition provided (unlike forEach which does not return anything).
+
+15. map:
+	Map takes a callback function and runs that function on each element of the array and returns the manipulated array (unlike forEach which does not return anything).
+
+16. reduce:
+	Reduce reduces an array to one single value.
+
+17. find methods:
+	find, findLast, findIndex, findLastIndex, every, some
+
+18. call vs apply vs bind
+	call attaches this into function and executes the function immediately.
+	bind attaches this into function but does not execute the function.
+	apply attaches this into function and executes the function immediately, but unlike call it takes an array as a parameter.	
+
+19. higher order function vs callback functions
+
+	A higher-order function is a function that takes another function(s) as an argument(s) and/or returns a function to its callers.
+	A callback function is a function that is passed to another function with the expectation that the other function will call it.
+
+20. event loop
+	Event loop is an endless loop, which waits for tasks, executes them and then sleeps until it receives more tasks.
+	The event loop executes tasks from the event queue only when the call stack is empty i.e. there is no ongoing task.
+	The event loop allows us to use callbacks and promises.
+	The event loop executes the tasks starting from the oldest first.
+	Callback functions that need to be asynchronously executed, are pushed onto the callback queue
+
+	
+	console.log("This is the first statement");
+   
+	setTimeout(function(){
+	    console.log("This is the second statement");
+	}, 1000);
+   
+	console.log("This is the third statement"); 
+	Output:
+
+	This is the first statement
+	This is the third statement
+	This is the second statement
+
+21. closures
+	A closure is a function having access to the parent scope, even after the parent function has closed/executed.
+
+22. Hoisting
+
+23. Coercion 
+	Coercion refers to the process of automatic or implicit conversion of values from one data type to another.
+
+24. Equality
+	JavaScript has both strict and type–converting comparisons:
+	Strict comparison (e.g., ===) checks for value equality without allowing coercion
+	Abstract comparison (e.g. ==) checks for value equality with coercion allowed
+
+25. How to check if two arrays are equal?
+	const a = [1, 2, 3];
+	const b = [1, 2, 3];
+	JSON.stringify(a) === JSON.stringify(b);
+
+26. Object.seal() vs Object.freeze()
+	Object.seal() allows changes to the existing properties of an object whereas Object.freeze() does not allow so. 
+	Object.freeze() makes an object immune to everything even little changes cannot be made. 
+	Object.seal() prevents from deletion of existing properties but cannot prevent them from external changes. 
+
+27. Javascript classes: Can a class have more than one constructor>? - NO
+
+28. Yield function:
+	The yield operator is used to pause and resume a generator function.
+
+29. Generator:
+	The function* declaration (function keyword followed by an asterisk) defines a generator function, which returns a Generator object.
+
+30. Arrow function vs Regular function:
+
+Unlike regular functions, arrow functions don’t have their own this or arguments binding. Instead, those identifiers are resolved in the lexical scope like any other variable. Let's see that in a quick example:
+
+name ="Arrow function"
+let me = { 
+ name: "Regular function", 
+ thisInArrow:() => { 
+   console.log("Example of " + this.name); //no 'this' binding here 
+ }, 
+ thisInRegular(){ 
+   console.log("Example of " + this.name); //'this' binding works here 
+ } 
+};
+me.thisInArrow(); 
+me.thisInRegular();
+
+Output:
+Example of Arrow function
+Example of Regular function
+
+31. When Not to Use Arrow Function:
+
+var cat = {
+  lives: 9,
+  jumps: () => {
+    this.lives--;
+  }
+}
+When you call cat.jumps, the number of lives does not decrease. It is because this is not bound to anything, and will inherit the value of this from its parent scope.
+
+32. Array sort
+
+x = [1,2,4,3]
+(4) [1, 2, 4, 3]
+x.sort((a,b)=>a-b)
+(4) [1, 2, 3, 4]
+x.sort((a,b)=>b-a)
+(4) [4, 3, 2, 1]
+
+33. Strict mode:
+
+1. cannot be used inside functions with default values :
+
+Below example code will not compile:
+function sum(a = 1, b = 2) {
+  // SyntaxError: "use strict" not allowed in function with default parameter
+  "use strict";
+  return a + b;
+}
+
+2. Will prevent accidental declaration of global variables:
+
+examples:
+
+"use strict"
+x=5
+VM594:2 Uncaught ReferenceError: x is not defined
+    at <anonymous>:2:2
+
+x=6
+"use strict"
+x=4
+4
+
+34. 
+
+Learn these for better prep:
+> Object.freeze() vd Object.seal() vs const
+> Immediately Invoked Function Expressions
+> TDZ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

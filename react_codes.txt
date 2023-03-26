@@ -1,0 +1,133 @@
+1. React HoC simple example
+2. React HOC complex example
+3. Ref
+4. useRef
+
+
+
+1. React HoC simple example:
+function Inner(props) {
+ return <div>Inner</div>
+}
+
+function Returner(Wrapper){
+  return function(props){
+    return (
+      <Wrapper />
+      )
+  }
+}
+
+let Outer = Returner(Inner)
+
+ReactDOM.render(<Outer />,document.getElementById("root"))
+---------------------------------------------------------------------------------------
+2. React HOC complex example:
+
+// Wrapped component, that will be passed as an argument to the HOC 
+const Button = (props) => (
+  <button onClick={props.increase}>Btn clicks count: {props.counter}</button>
+)
+
+// Yet another wrapped component, that will be passed as an argument to the HOC 
+const Label = (props) => (
+  <label onMouseOut={props.increase}>Mouse out count: {props.counter}</label>
+)
+
+
+// Higher Order Component
+const Hoc = (WrappedComponent) => {
+  return function() {
+    const [counter, setCounter] = React.useState(0);
+    
+    // This is the enhancement - adding increase method to ANY WrappedComponent
+    // that will be passed to the Hoc function
+   function increaseCounter(){
+      setCounter(counter+1)
+    }
+    
+
+      return (
+        // Better to bind method here than in constructor as bind creates a new function, thus consumes memory.
+        <WrappedComponent counter={counter} increase={() => this.increaseCounter()} />
+      )
+    }
+  }
+}
+
+const EnhancedButton = Hoc(Button)
+const EnhancedLabel = Hoc(Label)
+
+// Parent component to wrap both enhanced components for rendering.
+const Container = () => (
+  <div>
+    <EnhancedButton/>
+    <br/>
+    <EnhancedLabel />
+  </div>
+)
+
+ReactDOM.render(
+  <Container/>, 
+  document.getElementById('root')
+)
+---------------------------------------------------------------------------------------
+3. Ref:
+
+class App extends React.Component{
+  state = {
+    name : "Nate"
+  }
+  handleSubmit = ()=>{
+    this.setState({name : this.refs.myref.value})
+  }
+
+  render(){
+    return(
+      <>
+      <h1>Hello!</h1>
+      <input type="text" ref="myref"/>
+      <button type="button" onClick={()=>this.handleSubmit()}>
+        Submit
+      </button>
+      {this.state.name}
+      </>
+    )
+  }
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
+---------------------------------------------------------------------------------------
+4. useRef
+
+function App() {
+  let [name, setName] = useState("Nate");
+
+  let nameRef = useRef();
+
+  const submitButton = () => {
+    setName(nameRef.current.value);
+  };
+
+  return (
+    <div className="App">
+      <p>{name}</p>
+
+      <div>
+        <input ref={nameRef} type="text" />
+        <button type="button" onClick={submitButton}>
+          Submit
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
+---------------------------------------------------------------------------------------
+
+
+
+

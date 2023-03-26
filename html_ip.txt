@@ -1,0 +1,9 @@
+1. semantic & non-semantic tags
+
+Examples of non-semantic elements: <div> and <span> - Tells nothing about its content.
+Examples of semantic elements: <form>, <table>, and <article> - Clearly defines its content.
+
+2. pseudo class and elements
+
+3. meta tags
+

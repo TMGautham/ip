@@ -1,0 +1,126 @@
+>>React Lifecycle Methods:
+
+1. getDerivedStateFromProps :
+
+	The getDerivedStateFromProps() method is called right before rendering the element(s) in the DOM.
+	It takes state as an argument, and returns an object with changes to the state.
+
+class Header extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {favcolor : 'red'}
+  }
+  
+  static getDerivedStateFromProps(props,state){
+    return({favcolor : props.favcol})
+  }
+  
+  render(){
+    return (<h1>Your favorite color is {this.state.favcolor} </h1>)
+  }
+}
+
+ReactDOM.render(<Header favcol="orange"/>, document.getElementById('root'));
+
+2. render :
+	The render() method is required, and is the method that actually outputs the HTML to the DOM.
+
+3. componentDidMount:
+	The componentDidMount() method is called after the component is rendered.
+
+
+Some Code:
+
+class Inner extends React.Component{
+  
+  componentWillUnmount(){
+    alert("Component Will Unmount Now")
+  }
+   componentDidMount(){
+    alert("Component got mounted")
+  }
+  render(){
+    return(
+      <div>
+        Inner Component
+        </div>
+    )
+  }
+}
+
+class CounterClass extends React.Component{
+  
+  componentDidUpdate(){
+    alert("The main component got updated")
+  }
+  state = {counter : 0, display : true}
+  
+  handleIncrement = () =>{
+    this.setState({counter : this.state.counter+1})
+  }
+  
+  handleDecrement = () =>{
+    this.setState({counter : this.state.counter-1})
+  }
+  
+  handleInner = ()=>{
+    this.setState({display : false})
+  }
+   handleInner2 = ()=>{
+    this.setState({display : true})
+  }
+  render(){
+    
+    let comp = this.state.display?<Inner />:<div></div>
+    return(
+    <div>
+        <button onClick={this.handleIncrement}>+</button>
+      {this.state.counter}
+        <button onClick={this.handleDecrement}>-</button>
+        
+        {comp}
+        <button onClick={this.handleInner}>remove inner</button>
+        <button onClick={this.handleInner2}>add inner</button>
+    </div>
+      
+    )
+  }
+} 
+
+
+ReactDOM.render( 
+    <CounterClass />, 
+    document.getElementById('root')); 
+
+
+4. COmponentWillUnmount with hooks:
+
+
+function Inner(){
+  
+   React.useEffect(()=>()=>alert("Inner will get unmounted now")
+  ,[])
+ 
+  return(
+    <h2>Inner Component</h2>
+  )
+}
+
+function App(){
+  const [count, setCount] = React.useState(false);
+  console.log(count)
+  const handleClick =()=> {setCount(!count)}
+  return(
+    <>
+  <h1>Hello World</h1>
+      <button onClick={handleClick}> Toggle</button>
+      
+     {count?<Inner />:<></>}
+   </>
+  )
+}
+ ReactDOM.render( 
+    <App />, 
+    document.getElementById('root')); 
+
+

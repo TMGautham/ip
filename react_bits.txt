@@ -1,0 +1,21 @@
+1. React is unidirection: State is sent from parent to child, not child to parent.
+
+4. What are components?
+Components are independent and reusable bits of code. 
+
+5. What are Synthetic events in React?
+
+6. Pure components:
+Pure Components in React are the components which do not re-renders when the value of state and props has been updated with the same values. If the value of the previous state or props and the new state or props is the same, the component is not re-rendered. shouldComponentUpdate lifecycle method is not required and it will take of itself internally.
+
+7. What are refs:
+Refs are a function provided by React to access the DOM element and the React element that you might have created on your own. 
+
+8. When to use useRef:
+
+9. 
+
+
+
+
+
