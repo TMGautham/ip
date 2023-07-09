@@ -1,0 +1,49 @@
+1 @Controller
+It indicates that a particular class serves the role of a controller.
+It is used to mark a class as a web request handler.
+
+2 @RequestBody and @ResponseBody
+
+@RequestBody annotation is used to parse the incoming HTTP request and converts the body to a Java Object while @ResponseBody annotation is used to convert your object into HTTP response in the form client is expecting like JSON, XML, or simply text.
+
+3 @RequestParam and @PathVaraible
+	@RequestParam is used to get the request parameters from URL
+	@PathVariable extracts values from URI
+
+	For example, if the incoming HTTP request to retrieve a book on topic "Java" is http://localhost:8080/shop/order/1001/receipts?date=12-05-2017, 
+	then you can use the @RequestParam annotation to retrieve the query parameter date and you can use @PathVariable to extract the orderId i.e. "1001"
+
+
+4 @RestController
+	@RestController = @Controller + @ResponseBody
+
+Example 1:
+@Controller
+public class EmployeeController {
+
+	@Autowired
+	EmployeeRepository employeeRepository;
+	
+	//GET ALL EMPLOYEES
+	@ResponseBody
+	@GetMapping("/employees")
+	public List<Employee> listAllEmployees(){
+		return employeeRepository.findAll();
+	}
+}
+
+Example 2:
+@RestController
+public class EmployeeController {
+
+	@Autowired
+	EmployeeRepository employeeRepository;
+	
+	//GET ALL EMPLOYEES
+	@GetMapping("/employees")
+	public List<Employee> listAllEmployees(){
+		return employeeRepository.findAll();
+	}
+}
+
+5. 

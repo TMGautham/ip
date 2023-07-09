@@ -144,3 +144,96 @@ The output of this code will be 456 (not 123).
 The reason for this is as follows: When setting an object property, JavaScript will implicitly stringify the parameter value. In this case, since b and c are both objects, they will both be converted to "[object Object]". As a result, a[b] anda[c] are both equivalent to a["[object Object]"]
 
 
+10. Promise :
+
+function prom(){
+    return new Promise((res,rej)=>{
+       setTimeout(()=>res("1"),0);
+    });
+}
+
+(async function asyncCall() {
+    console.log('Start');
+    var result = await prom();
+    console.log(result);
+    console.log('End');
+})();
+
+Output:
+Start
+Promise {<pending>}
+1
+End
+
+
+11. Promise:
+
+function prom(){
+    return new Promise((res,rej)=>{
+       res(setTimeout(()=>{console.log("1")},0));
+    });
+}
+
+(async function asyncCall() {
+    console.log('Start');
+    var result = await prom();
+    console.log(result);
+    console.log('End');
+})();
+
+Output:
+Start
+End
+Promise {<pending>}
+1
+
+12. Promise:
+
+function prom(){
+    return new Promise((res,rej)=>{
+       res(1);
+    });
+}
+
+(async function asyncCall() {
+    console.log('Start');
+    var result = await prom();
+    console.log(result);
+    console.log('End');
+})();
+
+Output:
+Start
+1
+End
+Promise {<fulfilled>: undefined}
+
+13. call vs bind
+
+var person = {  
+  name: "James Smith",
+  hello: function(thing) {
+    console.log(this.name + " says hello " + thing);
+  }
+}
+
+person.hello("world");  // output: "James Smith says hello world"
+var helloFunc = person.hello.bind({ name: "Steven Smith" });
+helloFunc("world");  // output: Jim Smith says hello world"
+
+14. apply
+
+const person = {
+  fullName: function(city, country) {
+    return this.firstName + " " + this.lastName + "," + city + "," + country;
+  }
+}
+
+const person1 = {
+  firstName:"John",
+  lastName: "Doe"
+}
+
+person.fullName.apply(person1, ["Oslo", "Norway"]);
+
+Output : 'John Doe,Oslo,Norway'

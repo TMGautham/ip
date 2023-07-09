@@ -1,0 +1,43 @@
+1. AuthenticationProvider 
+2. WebSecurityConfigurerAdapter 
+3. SecurityFilterChain
+4. UserDetailsService 
+5. InMemoryUserDetailsManager
+6. BCryptPasswordEncoder
+7. UsernamePasswordAuthenticationToken
+8. Filter
+
+
+excepions:
+java.sql.SQLInvalidAuthorizationSpecException
+BeanCreationException
+BadCredentialsException
+
+What is a bean?
+A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container.
+
+What is @Bean?
+
+@Configuration
+public class AppConfig {
+    @Bean
+    public TransferService transferService() {
+        return new TransferServiceImpl();
+    }
+}
+     
+<beans>
+    <bean name="transferService" class="com.acme.TransferServiceImpl"/>
+</beans>
+
+Both will result in a bean named transferService being available in the BeanFactory / ApplicationContext, bound to an object instance of type TransferServiceImpl:
+
+
+What is @Component?
+@Component is used for general-purpose auto-detection of components.
+
+What is @Configuration?
+@Configuration is used for defining beans and their dependencies.
+
+
+

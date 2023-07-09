@@ -1,0 +1,72 @@
+1. Why Spring boot over Spring?
+	Starter POM
+	Component Scanning
+	Embedded server
+	InMemory DB
+	Actuator
+	Minimum configuration
+
+2. ResponseEntity
+ResponseEntity is a class that represents an HTTP request or response which consists of headers and body.
+
+3.Bean
+Any object in the Spring framework that we initialize or manage through Spring container is called Spring Bean.
+
+4. Inversion of Control
+
+public class Employee {
+	public void goToOffice(){
+		Car rentalCar = new Car(rent, direction, waitTime);
+		rentalCar.driveToOffice();
+	}
+}
+
+public class Employee{
+	private ICar car;
+	
+	public Employee(ICar car){
+		this.car = car;
+	}
+
+	public goToOffice(){
+		this.car.driveToOffice();
+	}
+}
+
+
+
+4.how to change tomcat server to jetty in spring boot
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jetty</artifactId>
+</dependency>
+
+5.How to configure log4j2 in spring boot
+
+ <dependencies>
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <exclusions>
+      <exclusion>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-logging</artifactId>
+      </exclusion>
+    </exclusions>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-log4j2</artifactId>
+  </dependency>
+</dependencies>
