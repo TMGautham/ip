@@ -71,6 +71,69 @@ ReactDOM.render(
   <Container/>, 
   document.getElementById('root')
 )
+
+
+---------------------------------------------------------------------------------------
+2.b. HOC
+
+import React from 'https://esm.sh/react@18.2.0'
+import ReactDOM from 'https://esm.sh/react-dom@18.2.0'
+
+
+const cityChanger = (LowerComp) =>{
+  
+const [place, setPlace] = React.useState("");  
+  
+const [check, setCheck] = React.useState(false);
+  
+  const handleChennai = () =>{
+    setPlace("Chennai")
+    setCheck(false)
+  }
+  
+  const handleBombay = () =>{
+    setPlace("Bombay")
+    setCheck(true)
+  }
+  
+  return(
+    <div>
+    <button onClick={handleChennai}>Chennai</button>
+    <button onClick={handleBombay}>Bombay</button>
+      
+      {check?<LowerComp place= {place} checkIfBombay={true}/>:<LowerComp place= {place} checkIfBombay={false}/>}
+      </div>
+  )
+}
+
+
+const LowerComp = (props) =>{
+  console.log(props)
+  return(
+    <div>
+  <h1>Hi {props.place}!</h1>
+      {props.checkIfBombay?<h2>Bombay is Nostalgic</h2>:<h2></h2>}
+      </div>
+  )
+}
+
+LowerComp.defaultProps = {
+  checkIfBombay : false,
+  place : "India",
+  message : "Bombay is Nostalgic"
+}
+
+function HelloWorld(){
+  return ( 
+    <div>
+    <h1>Hello, Worlds!</h1>
+    {cityChanger(LowerComp)}
+    </div>
+         )
+}
+
+ReactDOM.render(<HelloWorld />, document.getElementById('app'))
+
 ---------------------------------------------------------------------------------------
 3. Ref:
 
@@ -128,6 +191,139 @@ const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
 ---------------------------------------------------------------------------------------
 
+5. Using previousState in React Class Based component to update state:
+
+import React from "react";
+
+class Counter extends React.Component {
+  state = {
+    like: 0
+  };
+
+  handleLikeChange = () => {
+    this.setState((prevState) => {
+      return { like: prevState.like + 1 };
+    });
+  };
+
+  render() {
+    return <div onClick={this.handleLikeChange}>xxxxxxxx{this.state.like}</div>;
+  }
+}
+
+export default Counter;
+---------------------------------------------------------------------------------------
 
 
+6. Error handling in functional components:
 
+import * as React from 'react'
+import ReactDOM from 'react-dom'
+
+function ErrorHandler({error}) {
+  return (
+    <div role="alert">
+      <p>An error occurred:</p>
+      <pre>{error.message}</pre>
+    </div>
+  )
+}
+
+function Country({capital}) {
+  try {
+    return <div>Hello, visit {capital.toUpperCase()}</div>
+  } catch (error) {
+    return <ErrorHandler error={error} />
+  }
+}
+
+function City(props) {
+  try {
+    return <div>Hello, visit {props.name.toUpperCase()}</div>
+  } catch (error) {
+    return <ErrorHandler error={error} />
+  }
+}
+
+function App() {
+  return (
+    <div>
+      <Country />
+      <City name="Bombay!"/>
+    </div>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+---------------------------------------------------------------------------------------
+
+7. Error Boundary in class Component:
+
+import React, { useState } from "react";
+
+function FallBack() {
+  return (
+    <>
+      <h3>Error.</h3>
+      <h6>Reason : Count is greater than 4</h6>
+    </>
+  );
+}
+
+class ErrorBoundary extends React.Component {
+  state = {
+    hasError: false
+  };
+
+  static getDerivedStateFromError(error) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    console.log(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return <FallBack />;
+    }
+    return this.props.children;
+  }
+}
+
+function Increment() {
+  const [state, setState] = useState(0);
+  const handleClick = () => {
+    setState(state + 1);
+  };
+
+  if (state > 4) {
+    throw new Error("xx");
+  }
+
+  return (
+    <div>
+      <button onClick={handleClick}>increment</button>
+      {state}
+
+      <p />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <h1>Hello World</h1>
+      <ErrorBoundary>
+        <Increment />
+      </ErrorBoundary>
+    </>
+  );
+}
+
+export default App;
