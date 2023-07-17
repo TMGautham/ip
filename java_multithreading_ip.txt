@@ -17,7 +17,7 @@ public class Water implements Runnable{
 }
 
 
-2. Simple Thread with start method and run definition with Thread Class:
+2a. Simple Thread with start method and run definition with Thread Class:
 
 public class ReadInventoryThread extends Thread {
     
@@ -34,6 +34,42 @@ public class ReadInventoryThread extends Thread {
 }
 
 
+2b. Simple Thread with start method and run definition with Thread Class (check Thread constructor):
+
+public class ReadInventoryThread extends Thread {
+    
+    public void run(){
+        for(int i=0;i<5;i++){
+            System.out.println(i);
+        }
+    }   
+    
+    public static void main(String[] args) {
+        ReadInventoryThread rit = new ReadInventoryThread();
+        Thread thread = new Thread(rit);
+        thread.start();
+    }
+}
+
+
+2c. Simple Thread with start method and run definition with Thread Class (check Thread constructor):
+
+public class ReadInventoryThread extends Thread {
+    
+    public void run(){
+        for(int i=0;i<5;i++){
+            System.out.println(i);
+        }
+    }   
+    
+    public static void main(String[] args) {
+        ReadInventoryThread rit = new ReadInventoryThread();
+        Thread thread = new Thread(rit,"First Thread");
+        thread.start();
+        System.out.println(thread.getName());
+    }
+}
+
 3. Thread using lambda without implementing Runnable interface and Thread class:
 
 public class Water{
@@ -49,4 +85,406 @@ public class Water{
     
 }
 
+
+4. Join method example.
+t1.join();line in the code will wait make t1 Thread complete first before proceeding further.
+
+public class ThreadJoinMethod1 extends Thread {
+
+    public void run() {
+        Thread t = Thread.currentThread();
+        String threadName = t.getName();
+        for (int i = 0; i <= 3; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            System.out.println(threadName+" "+i);
+        }
+    }
+
+    public static void main(String args[]) {
+        ThreadJoinMethod1 t1 = new ThreadJoinMethod1();
+        ThreadJoinMethod1 t2 = new ThreadJoinMethod1();
+        ThreadJoinMethod1 t3 = new ThreadJoinMethod1();
+        t1.start();
+        try {
+            t1.join();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        t2.start();
+        t3.start();
+
+        System.out.println("This is Thread join() method example");
+    }
+}
+
+
+5.ExecutorService class : e.execute method
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+class ThreadPoolExample implements Runnable {
+    private String name;
+
+    public ThreadPoolExample(String t) {
+        this.name = t;
+    }
+
+    public void run() {
+        System.out.println(Thread.currentThread().getName() + " Start thread = " + name);
+        processmessage();//sleeps the thread for 2 seconds
+        System.out.println(Thread.currentThread().getName() + " End ");//prints thread name
+    }
+
+    private void processmessage() {
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class ThreadPoolTest {
+    public static void main(String[] args) {
+        ExecutorService e = Executors.newFixedThreadPool(3);//creating a pool of 3 threads
+        for (int i = 0; i <= 6; i++) {
+            Runnable t = new ThreadPoolExample("" + i);
+            e.execute(t);
+        }
+        e.shutdown();
+        while (!e.isTerminated()) {
+        }
+        System.out.println("All threads are finish");
+    }
+}
+
+6. Synchronized method:
+//Try running the program by removing the 'synchronized' keyword and see and find the output.
+
+import java.io.*;
+  
+class Line
+{
+    // if multiple threads(trains) will try to
+    // access this unsynchronized method,
+    // they all will get it. So there is chance
+    // that Object's  state will be corrupted.
+     synchronized public void getLine()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            System.out.println(i+" "+Thread.currentThread().getName());
+            try
+            {
+                Thread.sleep(400);
+            }
+            catch (Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+    }
+}
+  
+class Train extends Thread
+{
+    // reference to Line's Object.
+    Line line;
+  
+    Train(Line line)
+    {
+        this.line = line;
+    }
+  
+    @Override
+    public void run()
+    {
+        line.getLine();
+    }
+}
+  
+public class GFG
+{
+    public static void main(String[] args)
+    {
+        // Object of Line class that is shared
+        // among the threads.
+        Line obj = new Line();
+  
+        // creating the threads that are
+        // sharing the same Object.
+        Train train1 = new Train(obj);
+        Train train2 = new Train(obj);
+  
+        // threads start their execution.
+        train1.start();
+        train2.start();
+    }
+}
+
+7. Synchronized block
+//Try running the program by removing the 'synchronized' keyword and see and find the output.
+
+
+class PrintDemo extends Thread {
+   public void printCount() {
+      try {
+         for(int i = 5; i > 0; i--) {
+            System.out.println(Thread.currentThread().getName()+" Counter --- " + i );
+         }
+      } catch (Exception e) {
+         System.out.println("Thread " + Thread.currentThread().getName()+" interrupted.");
+      }
+   }
+   public void run() {
+      synchronized(this) {
+         printCount();
+      }
+      System.out.println("Thread " + Thread.currentThread().getName() + " exiting.");
+   }
+}
+public class TestThread {
+   public static void main(String args[]) {
+      PrintDemo PD = new PrintDemo();
+      Thread t1 = new Thread(PD );
+      Thread t2 = new Thread(PD );
+      t1.start();
+      t2.start();
+      // wait for threads to end
+      try {
+         t1.join();
+         t2.join();
+      } catch ( Exception e) {
+         System.out.println("Interrupted");
+      }
+   }
+}
+
+8. wait() and notify()
+
+// Java program to demonstrate the use of wait() method
+class GunFight {
+	private int bullets = 40;
+
+	// This method fires the number of bullets that are
+	// passed it. When the bullet in magazine becomes zero,
+	// it calls the wait() method and releases the lock.
+	synchronized public void fire(int bulletsToBeFired)
+	{
+		for (int i = 1; i <= bulletsToBeFired; i++) {
+			if (bullets == 0) {
+				System.out.println(i - 1
+								+ " bullets fired and "
+								+ bullets + " remains");
+				System.out.println(
+					"Invoking the wait() method");
+				try {
+					wait();
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println(
+					"Continuing the fire after reloading");
+			}
+
+			bullets--;
+		}
+		System.out.println(
+			"The firing process is complete");
+	}
+
+	// reload() increases the bullets by 40 everytime it is
+	// invoked and calls the notify() method which wakes up
+	// the thread that was sent to sleep using wait() inside
+	// of fire() method
+	synchronized public void reload()
+	{
+		System.out.println(
+			"Reloading the magazine and resuming "
+			+ "the thread using notify()");
+		bullets += 40;
+		notify();
+	}
+}
+
+public class WaitDemo extends Thread {
+	public static void main(String[] args)
+	{
+
+		GunFight gf = new GunFight();
+
+		// Creating a new thread and invoking
+		// our fire() method on it
+		new Thread() {
+			@Override public void run() { gf.fire(60); }
+		}.start();
+
+		// Creating a new thread and invoking
+		// our reload method on it
+		new Thread() {
+			@Override public void run() { gf.reload(); }
+		}.start();
+	}
+}
+
+
+9. notifyAll
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class NotificationTest {
+
+    private boolean go = false;
+
+    public static void main(String args[]) throws InterruptedException {
+        final NotificationTest test = new NotificationTest();
+     
+        Runnable waitTask = new Runnable(){
+     
+            @Override
+            public void run(){
+                try {
+                    test.shouldGo();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(NotificationTest.class.getName()).
+                           log(Level.SEVERE, null, ex);
+                }
+                System.out.println(Thread.currentThread() + " finished Execution");
+            }
+        };
+     
+        Runnable notifyTask = new Runnable(){
+     
+            @Override
+            public void run(){
+                test.go();
+                System.out.println(Thread.currentThread() + " finished Execution");
+            }
+        };
+     
+        Thread t1 = new Thread(waitTask, "WT1"); //will wait
+        Thread t2 = new Thread(waitTask, "WT2"); //will wait
+        Thread t3 = new Thread(waitTask, "WT3"); //will wait
+        Thread t4 = new Thread(notifyTask,"NT1"); //will notify
+     
+        //starting all waiting thread
+        t1.start();
+        t2.start();
+        t3.start();
+     
+        //pause to ensure all waiting thread started successfully
+        Thread.sleep(200);
+     
+        //starting notifying thread
+        t4.start();
+     
+    }
+    /*
+     * wait and notify can only be called from synchronized method or bock
+     */
+    private synchronized void shouldGo() throws InterruptedException {
+        while(go != true){
+            System.out.println(Thread.currentThread()
+                         + " is going to wait on this object");
+            wait(); //release lock and reacquires on wakeup
+            System.out.println(Thread.currentThread() + " is woken up");
+        }
+        go = false; //resetting condition
+    }
+ 
+    /*
+     * both shouldGo() and go() are locked on the current object referenced by "this" keyword
+     */
+    private synchronized void go() {
+        while (go == false){
+            System.out.println(Thread.currentThread()
+            + " is going to notify all or one thread waiting on this object");
+
+            go = true; //making condition true for waiting thread
+            notify(); // only one out of three waiting thread WT1, WT2,WT3 will woke up
+            // notifyAll(); // all waiting thread  WT1, WT2,WT3 will woke up
+        }
+     
+    }
+ 
+}
+
+10 a. create thread with anonymous class extending Thread class
+
+public class A 
+{
+    public static void main(String... ar)
+    {
+    
+        Thread t= new Thread(){ 	//Creating an object of Anonymous class which extends Thread class and passing this object to the reference of Thread class.
+        	public void run()	//Anonymous class overriding run() method of Thread class
+        	{
+            	setName("Anonymous Thread");	
+            	System.out.println("Name of the other thread - " + getName());
+            	for(int i=0;i<3;i++)
+            	{
+            		System.out.println(getName() + " " + i);
+            	}
+            
+            	}
+        	};				//Anonymous class ends here
+        	
+        //Starting anonymous thread
+        t.start();
+        
+        //Gets the name of main thead
+        System.out.println("Name of main thread - "+ Thread.currentThread().getName()); 
+    }
+}
+
+10 b.create thread with anonymous class extending Thread class
+
+public class AnonymousThreadTest {
+   public static void main(String[] args) {
+      new Thread() {
+         public void run() {
+            for (int i=1; i <= 5; i++) {
+               System.out.println("run() method: " + i);
+            }
+         }
+      }.start();
+      for (int j=1; j <= 5; j++) {
+         System.out.println("main() method: " + j);
+      }
+   }
+}
+
+11. create thread with anonymous class implementing Runnable interface
+
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class NotificationTest {
+
+    public static void main(String args[]) throws InterruptedException {
+
+        Runnable runnable = new Runnable(){
+            @Override
+            public void run(){
+                System.out.println(Thread.currentThread() + " finished Execution");
+            }
+        };
+     
+        Thread t1 = new Thread(runnable, "WT1"); //will wait
+        //starting all waiting thread
+        t1.start();
+    }
+}
+
+
+ 
 

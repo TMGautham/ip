@@ -2,3 +2,33 @@ cherrypick
 stash
 fork
 revert
+rebase
+diff vs log vs status
+
+git diff :
+git diff command will display any changes made since you last committed.
+git diff is between index (staging area) and working tree.
+
+
+git status:
+This command lets us gather information such as:
+
+	If the branch we're on is up to date
+	Any files that are staged, unstaged or untracked
+	Any files that have been created, modified or deleted
+	If there is anything to commit, pull or push
+
+
+git log :
+ git log will display the commit history for your branch.
+
+git log -n <limit>
+git log --oneline
+git log <filename>
+
+
+Git status vs Git log
+While git status gave information about the current working directory, git log will display the commit history for your branch.
+
+
+
