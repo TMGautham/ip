@@ -1,0 +1,43 @@
+atomic commit - commit only one thing at a time. it will be useful in case we want to undo.
+
+untracked file - file that is not added to staging area
+
+git log - history of commits
+
+how to skip staging area? : git commit -a -m "add file file.html"
+
+how to unstage a staged file? git restore –staged file-to-unstage.txt
+
+how to delete a branch after merging?
+git branch -d branchname
+
+how to delete a branch without merging?
+git branch -D branchname
+
+Can we switch to another branch while having untracked files in the current branch?
+
+git fetch -> fetches from remote repo and puts it in the local repo but does not put it in working directory
+We will need to use git merge to make it show in the working directory.
+
+git pull = git fetch + git merge
+
+fast-forward in git is a way of merging
+
+git stash
+git stash save
+all the above 2 are same
+
+get the list of all stashes
+git stash list 
+
+go back to previous commit
+git clean -f -d
+
+
+get details of what happened in a commit
+got show commit_id
+
+
+change previous commit message
+git commit --amend
+

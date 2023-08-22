@@ -1,0 +1,7 @@
+createBrowserRouter
+RouterProvider router = {router}
+Link
+Outlet
+errorComponent
+NavLink & className attribute that takes a function
+useNavigate

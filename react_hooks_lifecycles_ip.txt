@@ -1,0 +1,437 @@
+useState -- completed
+useEffect -- completed
+useContext
+useLayoutEffect -- completed
+useReducer -- completed
+useCallback -- completed
+useMemo -- completed
+useRef -- completed
+
+
+
+3. useReducer:
+
+import React from 'https://esm.sh/react@18.2.0'
+import ReactDOM from 'https://esm.sh/react-dom@18.2.0'
+
+ 
+ 
+function App(){
+  const [states, setStates] = React.useState('A')
+  const reducer = (state, action) =>{
+    switch (action){
+      case 'A': {console.log("action");setStates('B'); return 0}
+      case 'B': {console.log("action");setStates('A'); return 0};
+      default : throw new Error("what's going on?")
+    }  
+ }
+  
+  const [state, dispatch] = React.useReducer(reducer, 'B')
+ 
+  
+  return(
+    <div>
+    <h1>Hello {states}</h1>
+    <button onClick={()=>dispatch(states)}>{states}</button>
+    </div>
+      )
+}
+
+ReactDOM.render(<App />, document.getElementById('app'));
+
+
+4. useMemo:
+
+import React, {useState} from 'react';
+
+function App() {
+const [number, setNumber] = useState(0)
+// Using useMemo
+const squaredNum = useMemo(()=> {
+	return squareNum(number);
+}, [number])
+const [counter, setCounter] = useState(0);
+
+// Change the state to the input
+const onChangeHandler = (e) => {
+	setNumber(e.target.value);
+}
+
+// Increases the counter by 1
+const counterHander = () => {
+	setCounter(counter + 1);
+}
+return (
+	<div className="App">
+	<h1>Welcome to Geeksforgeeks</h1>
+	<input type="number" placeholder="Enter a number"
+		value={number} onChange={onChangeHandler}>
+	</input>
+	
+	<div>OUTPUT: {squaredNum}</div>
+	<button onClick= {counterHander}>Counter ++</button>
+	<div>Counter : {counter}</div>
+	</div>
+);
+}
+
+// function to square the value
+function squareNum(number){
+console.log("Squaring will be done!");
+return Math.pow(number, 2);
+}
+
+export default App;
+
+
+5. useRef (to keep track of previous value)
+
+import React, { useState, useEffect } from "react";
+import { useRef } from 'react';
+
+function App() {
+ const [value, setValue] = useState('')
+ const numberOfTimesRerendered = useRef(0)
+ const prevValue = useRef('')
+ useEffect(()=>{
+  numberOfTimesRerendered.current=numberOfTimesRerendered.current+1
+ 
+})
+
+useEffect(()=>{
+  prevValue.current=value
+},[value])
+
+  return (<>
+ <br />
+ <input onChange={e=>setValue(e.target.value)}/>
+ <div> Current value : {value}</div>
+ <div> Previous value : {prevValue.current}</div>
+ <div>Rendered these many  times : {numberOfTimesRerendered.current}</div>
+</>)
+}
+
+export default App;
+
+5b. useRef
+import React, {useEffect, useRef, useState} from 'react'
+import ReactDOM from 'react-dom'
+
+function App() {
+  const myRef = useRef(1)
+  const inputRef = useRef()
+  const [state, setState] = useState('')
+  useEffect(() => {
+    console.log(myRef.current)
+    myRef.current = myRef.current + 1
+    if (myRef.current == 4) {
+      inputRef.current.value = 'I will become better'
+    }
+  })
+  function focus() {
+    inputRef.current.focus()
+  }
+  return (
+    <>
+      <div>Hello World</div>
+      <input ref={inputRef} onChange={(e) => setState(e.target.value)} />
+      <button onClick={focus}>Click</button>
+      <div> Number of times rendered : {myRef.current} </div>
+    </>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+
+6 The useCallback and useMemo Hooks are similar. The main difference is that useMemo returns a memoized value and useCallback returns a memoized function.
+
+
+7a. React.Memo
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+function UserInfoNormal(props) {
+  const { name, avatar, memo } = props;
+  if(memo)
+    console.log("NORMAL COMPONENT RENDERING");
+    else
+    console.log("MEMOIZED COMPONENT RENDERING");
+
+  return (
+    <div className="user-info">
+      <img src={avatar} alt={`${name}'s avatar`} />
+      <span>{name}</span>
+    </div>
+  );
+}
+
+const UserInfoMemo = React.memo(UserInfoNormal);
+
+class App extends React.Component {
+  
+  state = {
+    search: ""
+  };
+
+  componentDidUpdate(){
+    console.log("rendered...")
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h1 />
+        <div>
+          <input
+            type="text"
+            onChange={e => this.setState({ search: e.target.value })}
+            value={this.state.search}
+            placeholder="Search"
+          />
+        </div>
+        <UserInfoNormal
+          name="Normal User"
+          avatar="https://via.placeholder.com/75x75"
+          memo={true}
+        />
+        <UserInfoMemo
+          name="Memo Users  "
+          avatar="https://via.placeholder.com/75x75"
+          memo={false}
+        />
+      </div>
+    );
+  }
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
+
+7b. useMemo easier example:
+
+import React, {useEffect, useMemo, useState} from 'react'
+import ReactDOM from 'react-dom'
+
+function squaring(number){
+  console.log("calling squaring")
+  return number*number;
+}
+
+function App() {
+  const [state, setState] = useState(0)
+  const [secondState, setSecondState] = useState(0)
+  const memoHook = useMemo (function evenNumDouble(){
+    console.log("double");
+    return secondState * secondState;
+},[secondState])
+
+  return (
+    <div className="App">
+      <h1>Welcome to Geeksforgeeks</h1>
+      <input type="text" onChange={(e)=>{setState(Number(e.target.value))}} value={state}/>
+      <button onClick={()=>{setState(Number(state)+1)}}>Increment</button>
+      <input type="text" onChange={(e)=>{setSecondState(Number(e.target.value))}} value={secondState}/>
+      <button onClick={()=>{setSecondState(Number(secondState)+1)}}>Increment</button>
+
+  
+      <br />
+      Increment : {state}
+      <br />
+      square : {memoHook}
+    </div>
+  )
+}
+
+export default App
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+8. useContext:
+
+import React, { useState, createContext, useContext } from "react";
+const MyContext = createContext();
+
+const GrandChild = () => {
+  const state = useContext(MyContext);
+  return (
+    <>
+      <MyContext.Consumer>
+        {(value) => (
+          <div>Inside GrandChild component. State is {value[1]}</div>
+        )}
+      </MyContext.Consumer>
+    </>
+  );
+};
+
+const Child = () => {
+  const [secondState] = useContext(MyContext)
+  return (
+    <>
+      <div>Inside Child component. State is {secondState} </div>
+      <GrandChild />
+    </>
+  );
+};
+
+const App = () => {
+  const [state, setState] = useState(175);
+  const [secondState, setSecondState] = useState("A");
+  return (
+    <>
+      <div>Inside App component</div>
+      <MyContext.Provider value={[state, secondState]}>
+        <Child state={state} />
+      </MyContext.Provider>
+    </>
+  );
+};
+
+export default App;
+
+9. useRef to set state:
+
+import React, {useEffect, useRef, useState} from 'react'
+import ReactDOM from 'react-dom'
+
+
+function App() {
+  const inputElement = useRef();
+  let x = ""
+
+  const focusInput = () => {
+    inputElement.current.focus();
+    console.log(inputElement.current.value)
+  };
+
+  return (
+    <>
+      <input type="text" ref={inputElement} />
+      <button onClick={focusInput}>Focus Input</button>
+      {x}
+    </>
+  );
+}
+
+
+export default App
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+-------------------------------------
+life cycle:
+
+1. static getDerivedStateFromProps(props,state)
+
+This method is majorly used to update the state, before the rendering of the component, which depends upon the props received by the component. This method is called on every rerendering of the component.
+
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+
+
+class Show extends React.Component {
+  constructor() {
+    super();
+    this.state = {email : ""}
+  }
+
+  static getDerivedStateFromProps(props,state){
+    return {email : props.email}
+  }
+
+  render() {
+    return <div>Email ID is : {this.state.email}</div>
+  }
+}
+
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      check: false,
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.setState({check : true})}>Check</button>
+        {this.state.check ? <Show email="gautham@cognizant.com"/> : <div>No email found</div>}
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+
+2. other lifecycle methods:
+
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+class Show extends React.Component {
+  constructor() {
+    super()
+    this.state = {email: ''}
+  }
+
+  shouldComponentUpdate(nextprops){
+    if(nextprops.value !== this.props.value){
+      return true;
+    }else return false;
+  }
+
+  componentDidMount() {
+    console.log('Show component : componentDidMount')
+  }
+
+  componentDidUpdate() {
+    console.log('Show component : componentDidUpdate')
+  }
+  static getDerivedStateFromProps(props, state) {
+    console.log('Show component : getDerivedStatFromProps')
+
+    return {email: props.email}
+  }
+
+  render() {
+    return <div>Email ID is : {this.state.email}</div>
+  }
+}
+
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      check: false,
+    }
+  }
+  componentDidMount() {
+    console.log('App component : componentDidMount')
+  }
+  componentDidUpdate() {
+    console.log('App component : componentDidUpdate')
+  }
+  render() {
+    return (
+      <div>
+        <button onClick={() => this.setState({check: true})}>Check</button>
+        {this.state.check ? (
+          <Show email="gautham@cognizant.com" />
+        ) : (
+          <div>No email found</div>
+        )}
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
