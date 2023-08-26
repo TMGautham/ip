@@ -15,3 +15,5 @@ Lifecycle
 3. Error boundary
 4. proptypes
 5. router
+
+I am going to revise Promise next.
