@@ -50,3 +50,7 @@ If you broke the tree but didn't commit the code, you can use git reset.
 if you just want to restore one file, you can use git checkout.
 If you broke the tree and committed the code, you can use git revert HEAD.
 
+how to undo a branch delete
+git branch <branch-name> <latestcommitID>
+
+how to unmerge
