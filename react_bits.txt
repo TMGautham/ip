@@ -13,8 +13,46 @@ Refs are a function provided by React to access the DOM element and the React el
 
 8. When to use useRef:
 
-9. 
+9. VirtualDOM, Reconciliation, Diffing
 
+VirtualDOM
+The Virtual DOM (VDOM) is an in-memory representation of Real DOM. The representation of a UI is kept in memory and synced with the "real" DOM. 
+
+Reconciliation
+Reconciliation is the process of comparing the previous state of the DOM with the new state, identifying the differences, and updating only the necessary parts to reflect the changes. 
+
+Diffing
+React uses a diffing algorithm as part of its reconciliation process to efficiently update the Document Object Model (DOM). When the state of a component changes, React creates a new virtual DOM and compares it with the current DOM. This comparison process, known as “diffing,” allows React to identify the minimum number of operations needed to update the DOM.
+
+10. different phases of component lifecycle
+
+Mounting, Updating, Unmounting
+
+11.  children prop
+
+12. Hooks calling rules:
+🔴 Do not call Hooks inside conditions or loops.
+🔴 Do not call Hooks after a conditional return statement.
+🔴 Do not call Hooks in event handlers.
+🔴 Do not call Hooks in class components.
+🔴 Do not call Hooks inside functions passed to useMemo, useReducer, or useEffect.
+
+13. React events:
+
+onClick
+onChange
+onDoubleClick 
+onSubmit
+onMouseOver 
+onFocus
+onBlur
+onKeyPress ={(x) => {
+            if(x.key=='Enter'){
+            console.log('onKeyPress',x.key);
+            }
+onKeyUp
+onKeyDown
+onScroll
 
 
 

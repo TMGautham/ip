@@ -1,0 +1,42 @@
+Take quizes here
+https://www.codingame.com/playgrounds/347/javascript-promises-mastering-the-asynchronous/its-quiz-time
+https://danlevy.net/javascript-promises-quiz/
+
+Other quiz:
+
+1
+const p = new Promise((resolve, reject) => {
+  setTimeout(() => reject('fuuuu'), 2000);
+})
+
+p.then(
+  () => console.log('[CHAINED] fullfilled#1 :)'),
+  () => console.log('[CHAINED] rejected#1 :(')
+).then(
+  () => console.log('[CHAINED] fullfilled#2 :)'),
+  () => console.log('[CHAINED] rejected#2 :(')
+);
+
+p.then(
+  () => console.log('[UNCHAINED] fullfilled#3 :)'),
+  () => console.log('[UNCHAINED] rejected#3 :(')
+);
+p.then(
+  () => console.log('[UNCHAINED] fullfilled#4 :)'),
+  () => console.log('[UNCHAINED] rejected#4 :(')
+);
+Promise {<pending>}
+VM84:7 [CHAINED] rejected#1 :(
+VM84:15 [UNCHAINED] rejected#3 :(
+VM84:19 [UNCHAINED] rejected#4 :(
+VM84:9 [CHAINED] fullfilled#2 :)
+
+2
+new Promise(function(resolve, reject){
+    reject('ok')
+}).then((res)=>{console.log("resolve "+res)},
+       (res=>{console.log("reject "+res)})).
+    catch(res=>console.log("catch "+res)).then(res=>console.log("second then "+res))
+VM640:4 reject ok
+VM640:5 second then undefined
+

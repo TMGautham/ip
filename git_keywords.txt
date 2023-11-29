@@ -40,4 +40,4 @@ got show commit_id
 
 change previous commit message
 git commit --amend
-
+-------------------------------

@@ -53,4 +53,30 @@ If you broke the tree and committed the code, you can use git revert HEAD.
 how to undo a branch delete
 git branch <branch-name> <latestcommitID>
 
-how to unmerge
+how to stash
+git stash 
+
+list of stashes
+git stash list
+
+apply the most recent stash
+git stash apply
+
+apply the most recent stash and remove after apply
+git stash pop
+
+stash@{0} is the most recent stash
+
+git stash drop stash@{1} will drop the stash without applying
+-----
+
+
+You have accidentally made a mistake and saved a file. But you have not staged or committed it. How wil you go back to the previously committed state of the file?
+git checkout <filename>
+
+You have accidentally made a mistake and saved a file and also staged it but did not commit it. How wil you go back to the previously committed state of the file?
+git reset HEAD <filename>
+git checkout <filename>
+Note: The first command will unstage but the changes will still show in working area. Hence the second command needs to be run.
+
+

@@ -92,4 +92,36 @@ When position is set to relative, the right property specifies the distance the 
 When position is set to sticky, the right property is used to compute the sticky-constraint rectangle.
 When position is set to static, the right property has no effect.
 
-10. 
+10. overflow property
+
+overflow: visible;
+overflow: hidden;
+overflow: scroll;
+overflow: auto;
+
+11. flexbox css
+Flexbox is a one-dimensional layout method for arranging items in rows or columns
+
+	container's properties
+	-----------------------
+	display : flex;
+	flex-direction : row;
+    	flex-wrap : wrap;
+	justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly; //to space contents in x axis
+	align-items: stretch | flex-start | flex-end | center | baseline; //to space contents in y axis
+
+contents' properties:
+--------------------
+flex-shrink
+flex-grow
+align-self
+order
+
+12. border-box
+box-sizing:border-box;
+without border boxing, actual height = height + padding + border
+with border boxing, actual height = height; (padding & border will be included in height itself)
+
+
+
+

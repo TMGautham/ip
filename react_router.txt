@@ -5,3 +5,58 @@ Outlet
 errorComponent
 NavLink & className attribute that takes a function
 useNavigate
+
+
+------
+createBrowserRouter vs JSX. Both the below code (1) & (2) do the same.
+
+(1)
+export default function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigation />}>
+            <Route index={true} element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+}
+
+(2)
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Navigation />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: 'home',
+        element: <Home />,
+      },
+      {
+        path: 'about',
+        element: <About />,
+      },
+      {
+        path: 'contact',
+        element: <Contact />,
+      },
+    ],
+  },
+  ,
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
+}
+
+------

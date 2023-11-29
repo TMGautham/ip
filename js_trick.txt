@@ -115,7 +115,7 @@ Output:
 "NaN2"	//same as previous comment. - is unary. Hence it tries to convert B to number which is not a number. Hence A-B is NaN
 NaN
 
-8. AN and OR operator:
+8. AND and OR operator:
 
 console.log("0 || 1 = "+(0 || 1));
 console.log("1 || 2 = "+(1 || 2));
@@ -128,7 +128,7 @@ output:
 0 && 1 = 0
 1 && 2 = 2
 
-9. Object strigification
+9. Object stringification
 
 var a={},
     b={key:'b'},
@@ -218,7 +218,7 @@ var person = {
 }
 
 person.hello("world");  // output: "James Smith says hello world"
-var helloFunc = person.hello.bind({ name: "Steven Smith" });
+var helloFunc = person.hello.bind({ name: "Jim Smith" });
 helloFunc("world");  // output: Jim Smith says hello world"
 
 14. apply
@@ -237,3 +237,81 @@ const person1 = {
 person.fullName.apply(person1, ["Oslo", "Norway"]);
 
 Output : 'John Doe,Oslo,Norway'
+
+
+15. js array of objects & arrays
+a. How will remove remove object with duplicate fields in an array of objects:
+
+let books = [
+        { title: "C++", author: "Bjarne" },
+        { title: "Java", author: "James" },
+        { title: "Python", author: "Guido" },
+        { title: "Java", author: "James" },  //remove this duplicate
+    ];
+
+
+sol:
+
+let arr = [] //array of strings to store title
+for(i in books){
+    if(arr.indexOf(books[i].title)==-1){
+        arr.push(books[i].title)
+    }
+}
+
+let finalArray = [] //to store non-duplicates
+
+for(i in arr){
+    let book = books.find(x=>x.title==arr[i])
+    finalArray.push(book)
+}
+
+console.log(finalArray)
+
+b. How to change value of object which is inside an array using JavaScript?
+
+books = [
+        { title: "C++", author: "Bjarne" },
+        { title: "Java", author: "James" },
+        { title: "Python", author: "Guido" },
+        { title: "Java", author: "Jamecs" },
+    ];
+//update author of python to mosh
+
+//find the index of the object first
+//then update the record in that index
+let index = books.findIndex(book=>book.title=='Python')
+books[index].author='Mosh'
+
+c. answer questions here
+https://backbencher.dev/javascript-quiz-arrays
+
+
+d. How will you sort this array in ascending order?
+var nums = [1, 20, 3, 450, 53]
+
+answer
+nums.sort(
+    function(a,b){
+        if(a>b) return 1
+        if(a<b) return -1
+    }
+)
+
+e. How will you sort this array in alphabetical order based on title?
+
+let books = [
+        { title: "C++", author: "Bjarne" },
+        { title: "Java", author: "James" },
+        { title: "Python", author: "Guido" },
+        { title: "Java", author: "Saini" },
+    ];
+
+answer
+books.sort(function(a,b){
+    if(a.title>b.title) return 1
+    if(a.title<b.title) return -1
+})
+
+
+

@@ -1,0 +1,37 @@
+let username:String
+username = 'Gautham'
+
+let arr:Array<Number>
+arr = [1,2,3]
+
+let arr2:Array<String>
+arr2 = ['a','bv']
+
+let arr3:String[]|Number[]
+arr3 = ['a','b']
+arr3=[1,2,3]
+
+let arr4:(String|Number)[]
+arr4 = [1,'test']
+
+let arr5 : Array<String|Number>
+arr5 = [2,'r']
+arr5=[1,2]
+arr5=['a',2]
+// arr5=['a',false,2]
+
+let arr6 : Array<String>|Array<Number>
+arr6 = [1,2]
+arr6=['a','b']
+// arr6=['a',2]
+
+let object : {
+    name : String;
+    age : Number,
+    isAdmin : Boolean
+}[]|{}[]
+
+object = [{name: 'Gautham',age : 29,isAdmin:true}]
+object = [{name: 'Gautham',age : 29}]
+object = [{}]
+
