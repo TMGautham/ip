@@ -4,7 +4,54 @@
 4. useRef
 
 
+0. Higher Order Component best example:
 
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+function Paragraph(props) {
+  return <div style={{backgroundColor: props.color}}>{props.text}</div>
+}
+
+function Form(props) {
+  return (
+    <>
+     <div style={{backgroundColor: props.color}}>
+      <input type="text"></input>
+      <input type="submit" />
+      </div>
+    </>
+  )
+}
+
+const withBakground = (WrappedComponent, color) => {
+  return () => {
+    return (
+      <>
+        <div>
+          <WrappedComponent text="Hey!!" color={color}/>
+        </div>
+      </>
+    )
+  }
+}
+
+const EnhancedParagraph = withBakground(Paragraph, 'cyan')
+const EnhancedForm = withBakground(Form, 'magenta')
+
+function App() {
+  return (
+    <>
+      <EnhancedParagraph/>
+      <br />
+      <EnhancedForm />
+    </>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+
+----------------------------------------------------------------
 1. React HoC simple example:
 function Inner(props) {
  return <div>Inner</div>
@@ -327,3 +374,82 @@ function App() {
 }
 
 export default App;
+
+
+-----------------------------------------------------------
+8. fetch with react:
+
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import "./styles.css";
+
+function App() {
+  const [books, setBooks] = useState(null);
+
+  useEffect(() => {
+    // fetch("https://jsonplaceholder.typicode.com/todos/1")
+    // .then(res=>res.json())
+    // .then(res=>setBooks(res))
+
+    async function getData() {
+      let result = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+      let json = await result.json();
+      setBooks(json);
+    }
+    getData();
+  }, []);
+
+  return (
+    <div className="App">
+      {books && (
+        <div className="books">
+          {books.userId}
+          {books.id}
+          {books.title}
+          {String(books.completed)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
+
+
+
+----------------------------------------------------------
+9. React Router
+
+import React from "react";
+import { render } from "react-dom";
+import { BrowserRouter, Switch, Route, Redirect, Link } from "react-router-dom";
+
+
+function Home() {
+  return <h1>Home</h1>;
+}
+function About() {
+  return <h1>About</h1>;
+}
+function Contacts() {
+  return <h1>Contacts</h1>;
+}
+
+const App = () => (
+  <BrowserRouter>
+    <Link to="/">Home</Link>
+    <br />
+    <Link to="/about">About</Link>
+    <br />
+    <Link to="/contacts">Contacts</Link>
+    <Switch>
+      <Route path="/" component = {Home} exact />
+      <Route path="/about" component = {About}  exact />
+      <Route path="/contacts" component = {Contacts}  exact />
+      <Redirect to="/" />
+    </Switch>
+  </BrowserRouter>
+);
+
+render(<App />, document.getElementById("root"));

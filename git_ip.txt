@@ -30,5 +30,53 @@ git log <filename>
 Git status vs Git log
 While git status gave information about the current working directory, git log will display the commit history for your branch.
 
+git reset filename - will unstage the file.
+git restore filename - will restore the file in WD to previous commit's state
+
+git reset --hard 
+This will go back to previous commit. Anything in index and WD will be gone.Untracked files will  be there.
+
+git reset --mixed
+This will go back to previous commit. Anything in index will be gone to WD
+
+git reset --soft
+This will go back to previous commit. Anything in index and WD will be there as it is.
+
+--soft: uncommit changes, changes are left staged (index).
+--mixed (default): uncommit + unstage changes, changes are left in working tree.
+--hard: uncommit + unstage + delete changes, nothing left.
+
+If you broke the tree but didn't commit the code, you can use git reset.
+if you just want to restore one file, you can use git checkout.
+If you broke the tree and committed the code, you can use git revert HEAD.
+
+how to undo a branch delete
+git branch <branch-name> <latestcommitID>
+
+how to stash
+git stash 
+
+list of stashes
+git stash list
+
+apply the most recent stash
+git stash apply
+
+apply the most recent stash and remove after apply
+git stash pop
+
+stash@{0} is the most recent stash
+
+git stash drop stash@{1} will drop the stash without applying
+-----
+
+
+You have accidentally made a mistake and saved a file. But you have not staged or committed it. How wil you go back to the previously committed state of the file?
+git checkout <filename>
+
+You have accidentally made a mistake and saved a file and also staged it but did not commit it. How wil you go back to the previously committed state of the file?
+git reset HEAD <filename>
+git checkout <filename>
+Note: The first command will unstage but the changes will still show in working area. Hence the second command needs to be run.
 
 

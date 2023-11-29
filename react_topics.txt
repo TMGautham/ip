@@ -1,0 +1,26 @@
+Basic concepts
+Lifecycle methods
+handle Functions
+Hooks:
+useEffect
+useLayoutEffect
+useReducer//
+useContext//
+useRef
+useMemo
+useCallBack
+CustomHook
+ErrorBoundary
+Higher Order Component
+Routing
+Fetch
+
+JS:
+let vs var vs const
+
+Jul-18:
+1. useReducer
+2. useRef
+3. useMemo, React.memo
+4. call vs bind vs apply
+5. normal fn vs arrow function

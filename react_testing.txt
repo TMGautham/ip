@@ -1,0 +1,74 @@
+Query:
+
+getBy
+queryBy
+findBy
+
+getAllBy
+queryAllBy
+findAllBy
+
+------------------
+
+ByRole
+ByText
+ByLabelText
+ByPlaceholderTest
+ByAltText
+ByDisplayValue
+ByTestId
+
+------------------
+
+toBeInTheDocument()
+toHaveTextContent()
+toBeDisabled()
+toBeNull()
+toBeEmptyDOMElement()
+toBeVisible()
+
+------------------
+
+
+ByText :
+
+<div>Hello World</div>
+-----
+test("test hello world", () => {
+  render(<App />);
+
+  const linkElement = screen.getByText("Hello World");
+  const linkElement2 = screen.queryByText("Hello World");
+
+  expect(linkElement).toBeInTheDocument();
+  expect(linkElement2).toBeInTheDocument();
+});
+
+
+------------------
+ByLabelText :
+
+<label for="name">Name</label>
+<input type="text" id="name" />
+-----
+test("test label", () => {
+  render(<App />);
+  const labels = screen.getByLabelText("Name");
+  expect(labels).toBeInTheDocument();
+});
+
+
+------------------
+ByPlaceholderText:
+
+<input type="text" id="name" />
+-----
+
+test("test placeholder", () => {
+  render(<App />);
+  const element = screen.getByPlaceholderText("Type here");
+  expect(element).toBeInTheDocument();
+});
+
+
+------------------

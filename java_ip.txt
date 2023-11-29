@@ -1,0 +1,199 @@
+Queue: (LinkedList, ArrayDeque, PriorityQueue)
+
+Methods of Queue
+The Queue interface includes all the methods of the Collection interface. It is because Collection is the super interface of Queue.
+
+Some of the commonly used methods of the Queue interface are:
+
+add() - Inserts the specified element into the queue. If the task is successful, add() returns true, if not it throws an exception.
+offer() - Inserts the specified element into the queue. If the task is successful, offer() returns true, if not it returns false.
+element() - Returns the head of the queue. Throws an exception if the queue is empty.
+peek() - Returns the head of the queue. Returns null if the queue is empty.
+remove() - Returns and removes the head of the queue. Throws an exception if the queue is empty.
+poll() - Returns and removes the head of the queue. Returns null if the queue is empty.
+
+
+1. HashSet
+	implements hashtable
+	adding and retrieving takes same time (because of hashtable)
+	no order maintained (tradeoff of using hashtable)
+	no duplicates
+
+2. Treeset
+	implements red-black tree
+	sorting order
+	no duplicates, no null
+
+3. HashMap
+	stores keys in HashTable
+	adding and retrieving takes same time (because of hashtable)
+	no order maintained (tradeoff of using hashtable)
+	no duplicate keys
+	
+	
+
+ArrayList Methods:
+
+add(element)
+addAll(collections)
+add(index, element)
+addAll(index, collections)
+
+indexOf(element)
+lastIndexOf(element)
+
+get(index)
+set(index,element)
+
+toArray()
+size()
+iEmpty()
+clear()
+
+contains(element)
+contains(COllections)
+
+constainsAll(element)
+containsAll(collections)
+
+remove(element)
+removeAll(collection)
+removeIf(predicate)
+
+
+
+Set methods:
+
+
+add(element)
+addAll(collections)
+
+toArray()
+size()
+iEmpty()
+clear()
+
+contains(element)
+containsAll(collections)
+
+remove(element)
+removeAll(collection)
+removeIf(predicate)
+
+
+Map methods:
+
+entryset()
+getKey()
+getValue()
+put(key,val)
+containsKey()
+containsValue()
+keySet()
+values()
+
+isEmpty()
+size()
+
+remove(key)
+remove(key,val)
+
+replace(key,newVal)
+replace(key,oldVal,newVal)
+
+
+
+Collections utility class:
+
+Collections.binarySearch(collection, element); //the collection should be sorted only then this will work.
+Collections.sort();
+Collections.reverse();
+Collections.addAll();
+Collections.disjoint();
+
+
+Arrays utility class:
+
+Arrays.asList()
+Arrays.binarySearch(intArr, intKey)
+Arrays.equals()
+	Arrays.sort(arr);
+
+
+Streams:
+
+//forEach
+arrayList.stream().forEach(person->System.out.println(person.getName()));
+		
+//map & collect
+List nameArray = arrayList.stream().map(person->person.getName()).collect(Collectors.toList());
+HashSet nameSet = (HashSet) arrayList.stream().map(person->person.getName()).collect(Collectors.toSet());
+System.out.println(nameArray);
+System.out.println(nameSet);
+
+//filter & reduce
+Optional<Integer> sum = arrayList.stream().map(person->person.getAge()).filter(age->age>27).reduce((a,b)->a+b);
+System.out.println(sum.get());
+
+
+
+
+Convert HashSet to Treeset:
+
+Set<String> setobj = new HashSet<>();
+Set<String> hashSetToTreeSet = new TreeSet<>(setobj);
+
+Convert TreeSet to HashSet:
+
+Set<String> set = new TreeSet<>();
+Set<String> hashSet = new HashSet<>(set);
+
+Convert Set to List:
+
+Set<String> setobj = new HashSet<>();
+ArrayList<String> list = new ArrayList<>(set);
+System.out.println(list);
+
+
+Convert Set to List:
+
+ArrayList<String> list2 = new ArrayList<>();
+list2.addAll(set);
+ystem.out.println(list2);
+
+Convert List to Set:
+
+ArrayList<String> list2 = new ArrayList<>();
+Set<String> set2 = new TreeSet<>(list2);
+System.out.println(set2);
+
+
+Function & BiFunction:
+
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
+ public class ArrayListExample1{  
+     public static void main(String args[]){  
+       Function func = s -> ("Hello "+s+"!");
+       BiFunction func2 = (s,n) -> ("Hello "+s+"! I am "+n);
+       System.out.println(func.apply("Cognizant"));
+       System.out.println(func2.apply("Cognizant","Gautham"));
+     }  
+}  
+
+Functional Interface:
+
+ 
+    @FunctionalInterface
+    interface MyFunction{
+        public String decorate(String str);
+    }
+ public class ArrayListExample1{  
+ public static void main(String args[]){  
+   MyFunction func = str -> ("Hello "+str+"!");
+   System.out.println(func.decorate("Cognizant"));
+ }  
+}  
+
+
