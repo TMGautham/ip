@@ -8,12 +8,43 @@ Promise,async await, event loop
 Error boundary
 Lifecycle
 
-
-
-1. Lifecycle methods
 2. React.memo, useMemo
 3. Error boundary
 4. proptypes
 5. router
 
 I am going to revise Promise next.
+
+Javascript:
+
+1 . Methods of
+  a. Array
+  b. String
+  c. Object
+  d. Date
+  e. Map
+  f. Set
+2. var vs let vs const & hoisting
+3. bind, call, apply, this keyword
+4. localStorage
+5. Promise, Async Await
+6. Event Loop
+7. fetch, axios
+8. Event handling
+
+React :
+
+1. Lifecycle methods
+2. Hooks & custom hooks & forwardRef
+    useState, useEffect, useLayoutEffect, useReducer, useContext, useMemo, useCallback, useRef, forwardRef
+3. HoC
+4. pass state from child to parent
+5. Error Boundary
+6. Redux & Redux thunk
+7. Redux toolkit & createAsyncThunk
+8. React Router (DOM & createBrowserRouter)
+9. renderProps
+10. react-testing-library
+11. jest (mock, fn, mockImplementation)
+12. PropTypes, defaultProps, children props
+
