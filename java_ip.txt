@@ -114,10 +114,14 @@ Collections.disjoint();
 
 Arrays utility class:
 
-Arrays.asList()
-Arrays.binarySearch(intArr, intKey)
-Arrays.equals()
-	Arrays.sort(arr);
+Arrays.toString();
+Arrays.asList();
+Arrays.stream();
+Arrays.binarySearch(intArr, intKey);
+Arrays.sort(arr);
+Arrays.equals(arr1,arr2);
+Arrays.compareTo(arr1,arr2);
+	
 
 
 Streams:

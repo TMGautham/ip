@@ -1,0 +1,182 @@
+
+----------------------scss----------------------
+-----------------------css----------------------
+------------------------------------------------
+
+1. Learn scss in with below code : 
+
+variable, list and usage of #{} in selector
+
+----------------------scss----------------------
+
+$width : 500px;
+$span : span;
+$list : 1px 2px 2px 3px, 2px 3px 3px 4px;
+
+div .#{$span}{
+    width : $width;
+    padding : $list;
+}
+
+-----------------------css----------------------
+
+div .span {
+	 width: 500px;
+	 padding: 1px 2px 2px 3px, 2px 3px 3px 4px;
+}
+
+------------------------------------------------
+
+
+2. Inheritance
+
+Note how it is nested in scss and how it is in css. also note the usage of & in &.content and how it produces css output and how it is different from others
+
+----------------------scss----------------------
+
+$width : 500px;
+$spanBgc : rgb(255,255,254);
+
+div{
+    width : $width;
+    
+    p{
+        background-color : $spanBgc;
+    }
+    
+    span{
+        background-color : $spanBgc;
+    }
+    
+    &.content{
+        background-color : rgb(100,100,100);
+    }
+    
+}
+
+-----------------------css----------------------
+
+div {
+	 width: 500px;
+}
+ div p {
+	 background-color: #fffffe;
+}
+ div span {
+	 background-color: #fffffe;
+}
+ div.content {
+	 background-color: #646464;
+}
+
+------------------------------------------------
+
+3. @extend directive and % symbol:
+
+The @extend directive lets you share a set of CSS properties from one selector to another.
+
+The @extend directive is useful if you have almost identically styled elements that only differ in some small details.
+
+----------------------scss----------------------
+%sharedstyle1{
+    background-color : green;
+    width : 500px;
+    height : 500px;
+    border-radius : 25px;
+}
+    
+    
+
+.content{
+    @extend %sharedstyle1;
+    padding : 20px;
+}
+
+.details{
+     @extend %sharedstyle1;
+    padding : 30px;
+    
+}
+
+.specifics{
+    @extend %sharedstyle1;
+    padding : 10px;
+}
+
+-----------------------css----------------------
+
+.content, .details, .specifics {
+	 background-color: green;
+	 width: 500px;
+	 height: 500px;
+	 border-radius: 25px;
+}
+ .content {
+	 padding: 20px;
+}
+ .details {
+	 padding: 30px;
+}
+ .specifics {
+	 padding: 10px;
+}
+
+------------------------------------------------
+ 
+4. using mixins:
+The @mixin directive lets you create CSS code that is to be reused throughout the website.
+The @include directive is created to let you use (include) the mixin.
+
+
+----------------------scss----------------------
+@mixin properties{ // note that @mixin properties() will also work
+    width : 100px;
+    height : 100px;
+}
+
+
+body{
+    @include properties()
+}
+-----------------------css----------------------
+
+body {
+  width: 100px;
+  height: 100px;
+}
+
+------------------------------------------------
+
+5. using mixins with parameters
+
+----------------------scss----------------------
+
+@mixin properties($color, $width, $height){
+    width : $width;
+    height : $height;
+}
+
+
+body{
+    @include properties(green, 100px, 30px);
+}
+
+div{
+    @include properties(green, 100px, 30px);
+}
+
+-----------------------css----------------------
+
+body {
+  width: 100px;
+  height: 30px;
+}
+div {
+  width: 100px;
+  height: 30px;
+}
+
+------------------------------------------------
+
+
+ 

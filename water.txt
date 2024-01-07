@@ -27,10 +27,14 @@ Javascript:
 2. var vs let vs const & hoisting
 3. bind, call, apply, this keyword
 4. localStorage
-5. Promise, Async Await
+5. Promise, all,allSettled,race,any, Async Await
 6. Event Loop
 7. fetch, axios
 8. Event handling
+9. reference copy, shallow copy, deep copy, deep equality, shallow equality
+10. Strict mode
+11. Prototype
+12. Throttling & Debouncing
 
 React :
 
@@ -47,4 +51,10 @@ React :
 10. react-testing-library
 11. jest (mock, fn, mockImplementation)
 12. PropTypes, defaultProps, children props
+
+CSS : box model, flexbox
+
+GIT
+
+
 

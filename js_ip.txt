@@ -495,17 +495,157 @@ Promise.any(([prom(false), prom2(false), prom3(true)]))
 Promise.race(([prom(true), prom2(true), prom3(true)]))
 .then(res=>console.log(res),res=>console.log(res))
 
+42. debouncing
+
+<input type="text" id="keyinput"/>
+
+const keyinput = document.getElementById("keyinput")
+
+function debounce(callback,delay){
+    let timeout
+   return function(txt){
+        clearTimeout(timeout)
+        timeout = setTimeout(()=>{
+            callback(txt)
+        },delay)
+   }
+}
+
+const updateDebounceText = debounce(function(text){
+    console.log(text)
+},1000)
+
+keyinput.addEventListener('input', (event)=>{
+    let text = event.target.value
+    // console.log(text)
+    updateDebounceText(text)
+})
+
+43. throttling
+
+<button id="throttle">Click Me</button>
+const button = document.getElementById("throttle")
+
+function throttle(callback,delay){
+    let previous = 0
+    return function(args){
+        let current = new Date().getTime()
+        // console.log(`Milliseconds after the previous throttle : ${current - previous}`)
+        if(current-previous > delay){
+             callback(args);
+             previous = current
+        }
+     
+    }
+}
+
+const callThrottle = throttle(callback,2000);
+
+function callback(text){
+    console.log(text)
+}
+
+button.addEventListener("click",function(){ 
+    callThrottle("Throttled now");
+})
 
 
+44. Prototype (using constructor function): 
+
+const p1 = {name : "Gautham", age : 29, org : "CTS"}
+const p2 = {name : "Vasan", age : 29, org : "CTS"}
 
 
+function Person(name, age, org) {
+    this.name = name
+    this.age = age
+    this.org = org
+}
+
+Person.prototype.getName = function() {
+    return this.name
+}
+
+Person.prototype.getName = function() {
+    return this.name
+}
+
+p1.getName()
+//output is "Gautham"
+
+p2.getName()
+//output is "Uncaught TypeError: p2.getName is not a function"
 
 
+-------------------------------------------------------------------------
+
+45. Prototype (using class): 
+
+const p3 = {name : "Gautham", age : 29, org : "CTS"}
+
+class Person{
+    constructor(name, age, org){
+        this.name = name
+        this.age = age
+        this.org = org
+    }
+}
+
+Person.prototype.getName = function() {
+    return this.name
+}
+
+p3.getName()
+//output is "Uncaught TypeError: p3.getName is not a function"
+
+p3.__proto__ = Person.prototype
+
+p3.getName()
+//output is "Gautham"
+
+-------------------------------------------------------------------------
+
+46. Reference copy vs Deep Copy vs Shallow Copy
+
+Reference copy : 
+
+let bike = {
+    brand: 'Harley Davidson'
+}
+
+let bike2 = bike
 
 
+Shallow Copy : 
+A shallow copy can be achieved using the spread operator (…) or using Object.assign()
 
+const obj = { name: 'Version 1', additionalInfo: { version: 1 } };
 
+const shallowCopy1 = { ...obj };
+const shallowCopy2 = Object.assign({}, obj);
 
+shallowCopy1.name = 'Version 2';
+shallowCopy1.additionalInfo.version = 2;
+
+shallowCopy2.name = 'Version 2';
+
+console.log(obj); // { name: 'Version 1', additionalInfo: { version: 2 } }
+console.log(shallowCopy1); // { name: 'Version 2', additionalInfo: { version: 2 } }
+console.log(shallowCopy2); // { name: 'Version 2', additionalInfo: { version: 2 } }
+
+Deep copy : 
+
+A deep copy can be achieved using JSON.parse() + JSON.stringify():
+
+const obj = { name: 'Version 1', additionalInfo: { version: 1 } };
+
+const deepCopy = JSON.parse(JSON.stringify(obj));
+
+deepCopy.name = 'Version 2';
+deepCopy.additionalInfo.version = 2;
+
+console.log(obj); // { name: 'Version 1', additionalInfo: { version: 1 } }
+console.log(deepCopy); // { name: 'Version 2', additionalInfo: { version: 2 } }
 
 
 

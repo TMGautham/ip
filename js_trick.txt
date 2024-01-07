@@ -313,5 +313,179 @@ books.sort(function(a,b){
     if(a.title<b.title) return -1
 })
 
+------------------------
+16. Array questions:
+
+a. How do you get an array of duplicate elements in an array?
+
+const arry = [1, 2, 1, 3, 4, 3, 5];
+
+arry.filter((element, index)=>{
+   return arry.indexOf(element) !== index
+})
 
 
+b. How do you get a new array removing duplicate values?
+
+let a = [1,1,2,2,3,4,5,5]
+let result = []
+for(let i=0;i<a.length;i++){
+    if(!result.includes(a[i])){
+        result.push(a[i])
+    }
+}
+console.log(result)
+
+Alternate solution:
+let result = []
+for(let i of a){
+    if(!result.includes(i)){
+        result.push(i)
+    }
+}
+
+c. How do you filter and get the elements that appear more than once in a list (get list of duplicates)?
+
+let a = [1,1,1,2]
+a.filter(
+    (element,index)=>{
+        //console.log(a.slice(0,index)+" E : "+element+" "+ a.slice(0,index).includes(element))
+        return a.indexOf(element) !== a.lastIndexOf(element) && !a.slice(0,index).includes(element)
+    }
+)
+
+
+d. How do you filter and get the elements that appear only once in a list (get of elements which do no have duplicates)?
+
+let a = [1,1,1,2,3,4,5,5,6,7]
+a.filter(
+    (element,index)=>{
+        console.log(a.slice(0,index)+" E : "+element+" "+ a.slice(0,index).includes(element))
+        return a.indexOf(element) === a.lastIndexOf(element) && !a.slice(0,index).includes(element)
+    }
+)
+
+d. Exract the list of all books under the person array.
+
+let person = [
+    {
+        name : 'Gautham',
+        books : ['The Da Vinci Code']
+    },
+     {
+        name : 'Adhithya',
+        books : ['Fatal Cure', 'Airport']
+     },
+     {
+        name : 'Ashok',
+        books : ['Timescape']
+     }
+]
+
+person.reduce(
+    (prev,curr)=>{
+        return [...prev, ...curr.books]
+    },[]
+)
+
+e. Get how many times an element occurs in a list?
+
+let a = [1,1,1,2,3,4,5,5,6,7]
+a.filter(x=>x==1).length
+
+
+f. How to sort an array of objects based on one of its object's properties.
+
+let person = [
+    {
+        name : 'Gautham',
+        books : ['The Da Vinci Code']
+    },
+     {
+        name : 'Adhithya',
+        books : ['Fatal Cure', 'Airport']
+     },
+     {
+        name : 'Ashok',
+        books : ['Timescape']
+     }
+]
+
+person.sort((p1,p2)=>p1.name>p2.name?1:-1)
+
+g. How to sort an array of objects based on more than one of its object's properties.
+
+let arrOfObj = [
+    {name : 'Gautham', age : 29},
+    {name : 'Gautham', age : 27},
+    {name : 'Venkat', age : 32},
+    {name : 'Vaibhavi', age : 33},
+    {name : 'Vivek', age : 22},
+    {name : 'Gautham',age :30}
+]
+
+arrOfObj.sort(
+    (person1, person2)=>{
+        return person1.name.localeCompare(person2.name) || person1.age - person2.age
+    }
+)
+
+
+h. How to remove duplicates in an array?
+
+	1) Remove duplicates from an array using a Set
+
+	let chars = ['A', 'B', 'A', 'C', 'B'];
+	let uniqueChars = [...new Set(chars)];
+	// let uniqueChars = Array.from(new Set(chars));
+	console.log(uniqueChars);
+
+
+	2) Remove duplicates from an array using indexOf() and filter() methods
+
+	let chars = ['A', 'B', 'A', 'C', 'B'];
+
+	let dupChars = chars.filter((c, index) => {
+    		return chars.indexOf(c) !== index;
+	});
+
+	console.log(dupChars);
+
+
+	3) Remove duplicates from an array using forEach() and include()
+
+	chars.forEach((char)=>{
+    		if(!uniqueChars.includes(char)){
+    	    		uniqueChars.push(char) 
+    		}
+	})
+
+	4) Remove duplicates from an array using reduce() Method
+
+	let chars = ['A', 'B', 'A', 'C', 'B','C','C','D','D','E'];
+
+	chars.reduce((accumulator,current)=>{
+    		if(!accumulator.includes(current)){
+        		accumulator.push(current)
+       		}
+    		return accumulator
+	},[])
+
+	5) Remove duplicates from an array using for loop
+
+	let chars = ['A', 'B', 'A', 'C', 'B','C','C','D','D','E'];
+
+	function removeDuplicates(arr) {
+    		let unique = [];
+    		for (i = 0; i < arr.length; i++) {
+       			if (unique.indexOf(arr[i]) === -1) {
+            			unique.push(arr[i]);
+       			}
+    		}
+    		return unique;
+	}
+	console.log(removeDuplicates(chars));
+
+	
+
+	
